@@ -45,11 +45,6 @@ export default `/* 全局属性
 }
 /* 二级标题修饰 请参考有实例的主题 */
 #nice h2:after {
-  display: inline-block;
-  content: " ";
-  vertical-align: bottom;
-  border-bottom: 36px solid #efebe9;
-  border-right: 20px solid transparent;
 }
 /* 三级标题 */
 #nice h3 {
@@ -94,6 +89,7 @@ export default `/* 全局属性
 }
 /* 加粗 */
 #nice strong {
+  color: rgb(239, 112, 96);
 }
 /* 斜体 */
 #nice em {
