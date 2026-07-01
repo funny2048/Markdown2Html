@@ -1,0 +1,41 @@
+name: Deploy to Huawei Cloud
+
+on:
+  push:
+    branches:
+      - main
+
+# 同一时间只允许一个部署任务运行，避免并发冲突
+concurrency:
+  group: deploy-production
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build
+        run: yarn build
+
+      - name: Deploy to Huawei Cloud via rsync
+        uses: burnett01/rsync-deployments@6.0.0
+        with:
+          switches: -avzr --delete --chmod=Du=rwx,Dg=rx,Do=rx,Fu=rw,Fg=r,Fo=r
+          path: build/
+          remote_path: ${{ secrets.DEPLOY_PATH }}
+          remote_host: ${{ secrets.HUWEI_HOST }}
+          remote_user: ${{ secrets.HUWEI_USER }}
+          remote_key: ${{ secrets.HUWEI_SSH_KEY }}
