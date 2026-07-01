@@ -36,19 +36,3 @@ yarn start
 启动后浏览器访问 `http://localhost:3000`。
 
 > Node 版本建议 14~16，项目已内置 `--openssl-legacy-provider` 以兼容 Node 17+。
-
-## 友情链接
-
-- [markdown2html](https://github.com/TaleAi/markdown2html)：markdown2html
-- [markdown nice](https://mdnice.com/)：markdown nice
-
-
-<!-- Security scan triggered at 2025-09-02 14:24:11 -->
-
-<!-- Security scan triggered at 2025-09-02 15:26:14 -->
-
-<!-- Security scan triggered at 2025-09-02 15:26:29 -->
-
-<!-- Security scan triggered at 2025-09-02 15:27:07 -->
-
-<!-- Security scan triggered at 2025-09-02 15:27:35 -->
