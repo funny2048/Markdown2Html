@@ -18,6 +18,8 @@ import fifteen from "./markdown/fifteen";
 import wgh from "./markdown/wgh";
 import claudeLike from "./markdown/claudeLike";
 import claudeLikeDark from "./markdown/claudeLikeDark";
+import architectBlue from "./markdown/architectBlue";
+import geekTech from "./markdown/geekTech";
 
 import content from "./content.md";
 
@@ -59,6 +61,8 @@ export default {
     wgh,
     claudeLike,
     claudeLikeDark,
+    architectBlue,
+    geekTech,
     custom
   },
   code: {

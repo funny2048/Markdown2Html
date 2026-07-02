@@ -42,27 +42,13 @@ export default `/* 全局属性
 
 /* 二级标题 */
 #nice h2 {
-  min-height: 32px;
-  line-height: 28px;
-  border-bottom: solid 1px #000000;
   color: #773098;
-  display: inline-block;
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
-  border-color: #773098;
-  padding-top: 5px;
-  padding-right: 0.5em;
-  padding-left: 0.5em;
-  margin-bottom: -3px;
   font-size: 22px;
-  margin:1em auto;
-  padding: 0.5em 0;
-  text-align: center;
-  width: 85%;
   font-weight: bold;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  border-bottom: 1px solid #773098;
+  padding: 0.5em 0;
+  margin: 1em 0;
+  text-align: left;
 }
 
 /* 二级标题内容 */

@@ -64,14 +64,30 @@ class Theme extends React.Component {
       { themeId: "16", name: "前端之巅同款", css: TEMPLATE.theme.nine },
       {
         themeId: "claude-like",
-        name: "Claude 风格",
+        name: "Claude 风格（浅色）",
         css: TEMPLATE.theme.claudeLike,
+        desc: "文艺慢读 · 深度长文",
         isNew: true
       },
       {
         themeId: "claude-like-dark",
-        name: "Claude 风格暗色",
+        name: "Claude 风格（暗色）",
         css: TEMPLATE.theme.claudeLikeDark,
+        desc: "文艺慢读 · 暗色护眼",
+        isNew: true
+      },
+      {
+        themeId: "architect-blue",
+        name: "架构师蓝",
+        css: TEMPLATE.theme.architectBlue,
+        desc: "架构工程 · 专业沉稳",
+        isNew: true
+      },
+      {
+        themeId: "geek-tech",
+        name: "极客技术",
+        css: TEMPLATE.theme.geekTech,
+        desc: "技术博客 · 代码教程",
         isNew: true
       },
       { themeId: "custom", name: "自定义", css: TEMPLATE.theme.custom }
@@ -123,6 +139,11 @@ class Theme extends React.Component {
                   <span className="nice-themeselect-theme-item-new">new</span>
                 )}
               </span>
+              {option.desc && (
+                <span className="nice-themeselect-theme-item-desc">
+                  {option.desc}
+                </span>
+              )}
             </div>
           </Menu.Item>
         ))}

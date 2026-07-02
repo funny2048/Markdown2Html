@@ -1,255 +1,314 @@
-export default `/* Claude Like 亮色主题
- * Anthropic Claude 风格，温暖衬线体
+export default `/* Claude 风格（浅色）
+ * 灵感：Anthropic Claude 暖色浅底，陶土橙衬温暖阅读感
+ * 主色：#C75B25（陶土橙）
+ * 底色：#FFFBF5（暖白，非纯白）
+ * 记忆点：二级标题自动中文序号 + 双线斜体引用
  */
+
 :root {
-  --cl-text-color: #2b2621;
-  --cl-heading-color: #1c1815;
-  --cl-bg-color: #faf9f5;
-  --cl-accent-color: #bc6a3a;
-  --cl-accent-hover: #9d552d;
-  --cl-border-color: #ddd5ca;
-  --cl-control-text: #72695e;
-  --cl-font-body: "Anthropic Serif", Georgia, "Times New Roman", "Songti SC", "Noto Serif CJK SC", "PingFang SC", serif;
-  --cl-font-ui: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Segoe UI", sans-serif;
+  --cl-bg: #FFFBF5;
+  --cl-text: #3F352C;
+  --cl-heading: #2A211B;
+  --cl-accent: #C75B25;
+  --cl-border: #E8D9C8;
+  --cl-muted: #A89580;
+  --cl-quote-bg: #F7EFE6;
+  --cl-quote-text: #6B5B4A;
+  --cl-code-bg: #2E251C;
+  --cl-code-text: #E8DCC8;
+  --cl-inline-bg: #F7EADF;
+  --cl-font-sans: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
   --cl-font-mono: Menlo, Monaco, "SF Mono", Consolas, monospace;
-  --cl-code-bg: #fcfcfa;
-  --cl-code-text: #1c1815;
-  --cl-code-border: #e9e2d8;
-  --cl-code-muted: #6f665d;
-  --cl-code-keyword: #7b2ff7;
-  --cl-code-string: #2f8f2f;
-  --cl-code-number: #c06a2a;
-  --cl-code-symbol: #2c5ec6;
-  --cl-inline-code-color: #b14a40;
-  --cl-inline-code-bg: #f2eeea;
-  --cl-inline-code-border: #d7cec5;
-  --cl-quote-bg: #f3ede5;
-  --cl-quote-border: #d8cbbb;
-  --cl-quote-text: #625950;
-  --cl-table-border: #cbb9a6;
-  --cl-table-row-border: rgba(114, 105, 94, 0.26);
-  --cl-table-hover: rgba(188, 106, 58, 0.05);
 }
+
 /* 全局属性 */
 #nice {
-  font-family: var(--cl-font-body);
-  color: var(--cl-text-color);
-  background-color: var(--cl-bg-color);
-  line-height: 1.62;
-  font-size: 16px;
+  counter-reset: h2cnt;
+  font-family: var(--cl-font-sans);
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--cl-text);
+  background-color: var(--cl-bg);
+  letter-spacing: 0.02em;
   -webkit-font-smoothing: antialiased;
 }
+
 /* 段落 */
 #nice p {
-  margin: 0.78em 0;
-  line-height: 1.62;
+  margin: 8px 0;
+  color: var(--cl-text);
 }
+
 /* 一级标题 */
 #nice h1 {
-  font-size: 1.84em;
-  font-weight: 600;
-  color: var(--cl-heading-color);
-  line-height: 1.16;
-  margin-top: 0.35rem;
-  margin-bottom: 0.7rem;
-  font-family: var(--cl-font-body);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--cl-heading);
+  margin: 6px 0 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--cl-border);
+  line-height: 1.4;
 }
-/* 二级标题 */
+
+/* 一级标题内容 */
+#nice h1 .content {
+}
+
+/* 一级标题修饰 */
+#nice h1:after {
+}
+
+/* 二级标题：自动中文序号 */
 #nice h2 {
-  font-size: 1.48em;
-  font-weight: 600;
-  color: var(--cl-heading-color);
-  line-height: 1.2;
-  margin-top: 1.45rem;
-  margin-bottom: 0.7rem;
-  font-family: var(--cl-font-body);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--cl-heading);
+  margin: 26px 0 12px;
+  counter-increment: h2cnt;
+  line-height: 1.4;
 }
+
+/* 二级标题内容 */
+#nice h2 .content {
+  display: inline-block;
+}
+
+/* 二级标题序号前缀 */
+#nice h2 .content:before {
+  content: counter(h2cnt, cjk-ideographic) "、";
+  color: var(--cl-accent);
+  font-weight: 700;
+  margin-right: 2px;
+}
+
+/* 二级标题修饰 */
+#nice h2:after {
+}
+
 /* 三级标题 */
 #nice h3 {
-  font-size: 1.24em;
-  font-weight: 600;
-  color: var(--cl-heading-color);
-  line-height: 1.32;
-  margin-top: 1.45rem;
-  margin-bottom: 0.7rem;
-  font-family: var(--cl-font-body);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--cl-accent);
+  margin: 20px 0 10px;
+  line-height: 1.4;
 }
+
+/* 三级标题内容 */
+#nice h3 .content {
+}
+
+/* 三级标题修饰 */
+#nice h3:after {
+}
+
 /* 四级标题 */
 #nice h4 {
-  font-size: 1.12em;
-  font-weight: 600;
-  color: var(--cl-heading-color);
-  margin-top: 1.45rem;
-  margin-bottom: 0.7rem;
-  font-family: var(--cl-font-body);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--cl-heading);
+  margin: 16px 0 8px;
 }
+
 /* 五级标题 */
 #nice h5 {
-  font-size: 1em;
+  font-size: 13px;
   font-weight: 600;
-  color: var(--cl-heading-color);
-  margin-top: 1.45rem;
-  margin-bottom: 0.7rem;
+  color: var(--cl-heading);
+  margin: 14px 0 6px;
 }
+
 /* 六级标题 */
 #nice h6 {
-  font-size: 1em;
+  font-size: 13px;
   font-weight: 600;
-  color: var(--cl-control-text);
-  margin-top: 1.45rem;
-  margin-bottom: 0.7rem;
+  color: var(--cl-muted);
+  margin: 14px 0 6px;
 }
-/* 无序列表 */
+
+/* 无序列表整体样式 */
 #nice ul {
-  padding-left: 1.45rem;
-  margin: 0.78em 0;
+  padding-left: 1.4em;
+  margin: 10px 0;
 }
-/* 有序列表 */
+
+/* 有序列表整体样式 */
 #nice ol {
-  padding-left: 1.45rem;
-  margin: 0.78em 0;
+  padding-left: 1.5em;
+  margin: 10px 0;
 }
+
 /* 列表内容 */
 #nice li section {
-  padding-left: 0.15rem;
-  margin: 0;
+  margin: 5px 0;
+  line-height: 1.7;
+  color: var(--cl-text);
 }
-/* 引用 */
+
+/* 引用：双线 + 斜体 */
 #nice blockquote {
-  border-left: 2px solid var(--cl-quote-border);
+  border-left: 3px double var(--cl-accent);
   background-color: var(--cl-quote-bg);
-  padding: 0.55rem 1rem;
+  padding: 10px 14px;
+  margin: 14px 0;
   color: var(--cl-quote-text);
-  border-radius: 10px;
-  margin: 0.78em 0;
+  font-style: italic;
+  border-radius: 0 4px 4px 0;
 }
+
 /* 引用文字 */
 #nice blockquote p {
   margin: 0;
   color: var(--cl-quote-text);
 }
+
 /* 链接 */
 #nice a span {
-  color: var(--cl-accent-color);
-  text-decoration: none;
-  border-bottom: none;
+  color: var(--cl-accent);
+  border-bottom: 1px solid var(--cl-accent);
 }
+
 /* 加粗 */
 #nice strong {
-  font-family: var(--cl-font-ui);
+  color: var(--cl-accent);
   font-weight: 700;
-  color: var(--cl-heading-color);
-  letter-spacing: 0;
 }
+
 /* 斜体 */
 #nice em {
+  color: var(--cl-quote-text);
 }
+
 /* 加粗斜体 */
 #nice em strong {
+  color: var(--cl-accent);
 }
+
 /* 删除线 */
 #nice del {
+  color: var(--cl-muted);
 }
+
 /* 分隔线 */
 #nice hr {
-  height: 1px;
-  background-color: var(--cl-border-color);
-  border: 0 none;
-  overflow: hidden;
-  opacity: 0.75;
-  margin: 26px 0;
+  border: none;
+  border-top: 1px dashed var(--cl-border);
+  margin: 22px 0;
 }
+
 /* 图片 */
 #nice img {
   max-width: 100%;
-  border-radius: 6px;
+  border-radius: 4px;
+  display: block;
+  margin: 12px auto;
 }
+
 /* 图片描述文字 */
 #nice figcaption {
   text-align: center;
-  color: var(--cl-control-text);
-  font-size: 0.9em;
+  color: var(--cl-muted);
+  font-size: 12px;
+  margin-top: 6px;
 }
+
 /* 行内代码 */
 #nice p code, #nice li code {
   font-family: var(--cl-font-mono);
-  border: 1px solid var(--cl-inline-code-border);
-  background-color: var(--cl-inline-code-bg);
-  color: var(--cl-inline-code-color);
-  border-radius: 999px;
-  padding: 0.08em 0.42em 0.1em;
-  font-size: 0.9em;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  color: var(--cl-accent);
+  background-color: var(--cl-inline-bg);
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 0.92em;
 }
-/* 代码块 */
+
+/* 非微信代码块容器：深色暖棕底 */
+#nice pre {
+  background-color: var(--cl-code-bg);
+  padding: 12px 14px;
+  border-radius: 4px;
+  overflow-x: auto;
+  margin: 14px 0;
+}
+
+/* 非微信代码块文字 */
 #nice pre code {
   font-family: var(--cl-font-mono);
-  border: 1px solid var(--cl-code-border);
-  background-color: var(--cl-code-bg);
+  font-size: 12.5px;
   color: var(--cl-code-text);
-  border-radius: 8px;
-  padding: 0.9rem 1rem 0.85rem;
-  font-size: 0.9em;
-  display: block;
-  line-height: 1.55;
-  overflow-x: auto;
+  background: transparent;
+  line-height: 1.6;
 }
+
 /* 表格 */
 #nice table {
-  width: 100%;
   border-collapse: collapse;
-  border-top: 1px solid var(--cl-table-border);
-  border-bottom: 1px solid var(--cl-table-border);
+  width: 100%;
+  margin: 14px 0;
+  font-size: 13px;
 }
+
+/* 表格内的单元格 */
 #nice table tr th,
 #nice table tr td {
-  border: 0;
-  padding: 12px 18px 12px 0;
-  text-align: left;
-  font-size: 0.93rem;
-  line-height: 1.56;
-  font-family: var(--cl-font-body);
-  border-bottom: 1px solid var(--cl-table-row-border);
+  border-bottom: 1px solid var(--cl-border);
+  padding: 7px 10px;
+  color: var(--cl-text);
 }
+
 /* 表头 */
-#nice table thead tr th {
-  font-weight: 600;
-  color: var(--cl-heading-color);
-  border-bottom: 1px solid var(--cl-table-border);
-  font-variant-numeric: lining-nums tabular-nums;
+#nice table tr th {
+  color: var(--cl-accent);
+  font-weight: 700;
+  border-bottom: 2px solid var(--cl-accent);
 }
-/* 表格单元格 */
-#nice table tbody tr td {
-  font-weight: 400;
-  font-variant-numeric: lining-nums tabular-nums;
-  vertical-align: top;
+
+/* 微信代码块：统一深色暖棕底 */
+#nice .code-snippet__fix {
+  background-color: var(--cl-code-bg) !important;
+  border-color: var(--cl-border) !important;
 }
+
+#nice .code-snippet__fix .code-snippet__line-index li,
+#nice .code-snippet__fix .code-snippet__line-index li::before {
+  color: var(--cl-muted) !important;
+}
+
 /* 脚注文字 */
 #nice .footnote-word {
-  color: var(--cl-accent-color);
+  color: var(--cl-accent);
 }
+
 /* 脚注上标 */
 #nice .footnote-ref {
-  color: var(--cl-accent-color);
+  color: var(--cl-accent);
 }
+
 /* "参考资料"四个字 */
 #nice .footnotes-sep:before {
+  color: var(--cl-heading);
 }
+
 /* 参考资料编号 */
 #nice .footnote-num {
+  color: var(--cl-muted);
 }
+
 /* 参考资料文字 */
 #nice .footnote-item p {
-  color: var(--cl-control-text);
-  font-size: 0.9em;
+  color: var(--cl-muted);
+  font-size: 12px;
 }
+
 /* 参考资料解释 */
 #nice .footnote-item p em {
-  color: var(--cl-text-color);
+  color: var(--cl-quote-text);
 }
+
 /* 行间公式 */
 #nice .block-equation svg {
 }
+
 /* 行内公式 */
 #nice .inline-equation svg {
 }`;

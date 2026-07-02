@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>主题对照 Demo</title>
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; background: #EFEFEF; margin: 0; padding: 0; }
+  .toolbar { position: sticky; top: 0; background: #fff; border-bottom: 1px solid #e0e0e0; padding: 12px 20px; z-index: 10; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .toolbar .title { font-weight: 700; font-size: 14px; margin-right: 8px; }
+  .toolbar button { padding: 8px 14px; border: 1px solid #ddd; background: #fff; border-radius: 6px; cursor: pointer; font-size: 13px; transition: all .15s; }
+  .toolbar button:hover { border-color: #0354FF; }
+  .toolbar button.active { background: #1A1A1A; color: #fff; border-color: #1A1A1A; }
+  .toolbar .note { color: #999; font-size: 12px; margin-left: 10px; }
+  .stage { padding: 28px 12px 60px; display: flex; justify-content: center; }
+  .phone { width: 420px; background: #fff; border-radius: 10px; box-shadow: 0 6px 28px rgba(0, 0, 0, .08); overflow: hidden; }
+</style>
+<style id="theme-style"></style>
+</head>
+<body>
+<div class="toolbar">
+  <span class="title">主题</span>
+  <button data-theme="claudeLight" class="active">Claude 风格（浅色）</button>
+  <button data-theme="geekTech">极客技术</button>
+  <button data-theme="architectBlue">架构师蓝</button>
+  <button data-theme="claudeDark">Claude 风格（暗色）</button>
+  <span class="note">正文 13px · 行距 1.6 · 段距 8px · 标题 18/16/14/13</span>
+</div>
+
+<div class="stage">
+  <div class="phone">
+    <div id="nice">
+
+      <h1><span class="content">上下文工程：决定 Agent 上限的隐藏变量</span></h1>
+
+      <p>很多人以为 Agent 不稳定是模型不行。<strong>但真正的瓶颈，往往是上下文质量。</strong></p>
+
+      <p>同一个模型，给它精心组织的上下文，和塞给它一堆原始日志，效果天差地别。</p>
+
+      <h2><span class="content">什么是上下文工程</span></h2>
+
+      <p>上下文工程，本质是一个<strong>信息选择问题</strong>：在有限的 token 预算内，决定放什么、不放什么。</p>
+
+      <blockquote><p>上下文的质量，决定了 Agent 的能力上限。</p></blockquote>
+
+      <h3><span class="content">三个核心动作</span></h3>
+
+      <ul>
+        <li><section>压缩：把长对话压成关键事实</section></li>
+        <li><section>检索：按需拉取相关知识，而非全量塞入</section></li>
+        <li><section>排序：把最相关的放在注意力最集中的位置</section></li>
+      </ul>
+
+      <p>关键参数示例：<code>max_tokens=8000</code>、<code>top_k=5</code>。</p>
+
+      <h4><span class="content">一个最小实现</span></h4>
+
+      <pre><code>def build_context(query, memory):
+    related = retrieve(query, top_k=5)
+    return compress(memory) + related</code></pre>
+
+      <figure>
+        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='380' height='140'><rect width='100%25' height='100%25' fill='%23f0f0f0'/><text x='50%25' y='50%25' font-size='14' fill='%23999' text-anchor='middle' dy='.3em' font-family='sans-serif'>上下文层级示意</text></svg>">
+        <figcaption>图 1：压缩 / 检索 / 排序 三层结构</figcaption>
+      </figure>
+
+      <h2><span class="content">常见踩坑</span></h2>
+
+      <table>
+        <thead><tr><th>问题</th><th>后果</th><th>解法</th></tr></thead>
+        <tbody>
+          <tr><td>全量历史塞入</td><td>token 爆炸</td><td>分层压缩</td></tr>
+          <tr><td>无关检索结果</td><td>注意力分散</td><td>重排序</td></tr>
+          <tr><td>指令埋在末尾</td><td>被遗忘</td><td>前置关键指令</td></tr>
+        </tbody>
+      </table>
+
+      <hr>
+
+      <p>更多细节见 <a><span>官方文档</span></a>，建议结合实践调试。</p>
+
+    </div>
+  </div>
+</div>
+
+<script>
+const themes = {};
+
+// ===== Claude 风格（浅色）=====
+themes.claudeLight = `
+:root {
+  --cl-bg: #FFFBF5; --cl-text: #3F352C; --cl-heading: #2A211B; --cl-accent: #C75B25;
+  --cl-border: #E8D9C8; --cl-muted: #A89580; --cl-quote-bg: #F7EFE6; --cl-quote-text: #6B5B4A;
+  --cl-code-bg: #2E251C; --cl-code-text: #E8DCC8; --cl-inline-bg: #F7EADF;
+  --cl-font-mono: Menlo, Monaco, "SF Mono", Consolas, monospace;
+}
+#nice { counter-reset: h2cnt; font-size: 13px; line-height: 1.6; color: var(--cl-text); background-color: var(--cl-bg); letter-spacing: 0.02em; padding: 26px; }
+#nice p { margin: 8px 0; color: var(--cl-text); }
+#nice h1 { font-size: 18px; font-weight: 700; color: var(--cl-heading); margin: 6px 0 16px; padding-bottom: 10px; border-bottom: 1px solid var(--cl-border); line-height: 1.4; }
+#nice h2 { font-size: 16px; font-weight: 700; color: var(--cl-heading); margin: 26px 0 12px; counter-increment: h2cnt; line-height: 1.4; }
+#nice h2 .content { display: inline-block; }
+#nice h2 .content:before { content: counter(h2cnt, cjk-ideographic) "、"; color: var(--cl-accent); font-weight: 700; margin-right: 2px; }
+#nice h3 { font-size: 14px; font-weight: 700; color: var(--cl-accent); margin: 20px 0 10px; line-height: 1.4; }
+#nice h4 { font-size: 13px; font-weight: 700; color: var(--cl-heading); margin: 16px 0 8px; }
+#nice strong { color: var(--cl-accent); font-weight: 700; }
+#nice p code, #nice li code { font-family: var(--cl-font-mono); color: var(--cl-accent); background-color: var(--cl-inline-bg); padding: 1px 6px; border-radius: 3px; font-size: .92em; }
+#nice blockquote { border-left: 3px double var(--cl-accent); background-color: var(--cl-quote-bg); padding: 10px 14px; margin: 14px 0; color: var(--cl-quote-text); font-style: italic; border-radius: 0 4px 4px 0; }
+#nice blockquote p { margin: 0; color: var(--cl-quote-text); }
+#nice a span { color: var(--cl-accent); border-bottom: 1px solid var(--cl-accent); }
+#nice ul, #nice ol { padding-left: 1.4em; margin: 10px 0; }
+#nice li section { margin: 5px 0; line-height: 1.7; color: var(--cl-text); }
+#nice pre { background-color: var(--cl-code-bg); padding: 12px 14px; border-radius: 4px; overflow-x: auto; margin: 14px 0; }
+#nice pre code { font-family: var(--cl-font-mono); font-size: 12.5px; color: var(--cl-code-text); background: transparent; line-height: 1.6; }
+#nice table { border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 13px; }
+#nice table tr th, #nice table tr td { border-bottom: 1px solid var(--cl-border); padding: 7px 10px; color: var(--cl-text); }
+#nice table tr th { color: var(--cl-accent); font-weight: 700; border-bottom: 2px solid var(--cl-accent); }
+#nice img { max-width: 100%; border-radius: 4px; display: block; margin: 12px auto; }
+#nice figcaption { text-align: center; color: var(--cl-muted); font-size: 12px; margin-top: 6px; }
+#nice figure { margin: 16px 0; }
+#nice hr { border: none; border-top: 1px dashed var(--cl-border); margin: 22px 0; }
+`;
+
+// ===== 极客技术 =====
+themes.geekTech = `
+:root {
+  --gt-bg: #FFFFFF; --gt-text: #333333; --gt-heading: #1A1A1A; --gt-accent: #FF6B00;
+  --gt-accent-bg: #FFEDD5; --gt-highlight: #FFE082; --gt-border: #E8E8E8; --gt-muted: #999999;
+  --gt-quote-bg: #FAFAFA; --gt-quote-text: #555555; --gt-code-bg: #1E1E1E; --gt-code-text: #D4D4D4;
+  --gt-font-mono: Menlo, Monaco, "SF Mono", Consolas, monospace;
+}
+#nice { font-size: 13px; line-height: 1.6; color: var(--gt-text); background-color: var(--gt-bg); padding: 26px; }
+#nice p { margin: 8px 0; color: var(--gt-text); }
+#nice h1 { font-size: 18px; font-weight: 800; color: var(--gt-heading); margin: 6px 0 16px; letter-spacing: -0.01em; line-height: 1.4; }
+#nice h2 { font-size: 16px; font-weight: 700; color: var(--gt-heading); margin: 26px 0 12px; line-height: 1.4; }
+#nice h2 .content { display: inline-block; }
+#nice h2 .content:before { content: "❯ "; color: var(--gt-accent); font-family: var(--gt-font-mono); font-weight: 700; }
+#nice h3 { font-size: 14px; font-weight: 700; color: var(--gt-heading); margin: 20px 0 10px; line-height: 1.4; }
+#nice h3 .content { display: inline-block; }
+#nice h3 .content:before { content: "› "; color: var(--gt-accent); font-family: var(--gt-font-mono); }
+#nice h4 { font-size: 13px; font-weight: 700; color: var(--gt-heading); margin: 16px 0 8px; }
+#nice strong { color: var(--gt-heading); font-weight: 700; background: linear-gradient(transparent 58%, var(--gt-highlight) 58%); padding: 0 2px; }
+#nice p code, #nice li code { font-family: var(--gt-font-mono); color: var(--gt-accent); background-color: var(--gt-accent-bg); padding: 1px 6px; border-radius: 3px; font-size: .9em; font-weight: 600; }
+#nice blockquote { border-left: 3px solid var(--gt-accent); background-color: var(--gt-quote-bg); padding: 10px 14px; margin: 14px 0; color: var(--gt-quote-text); border-radius: 0 4px 4px 0; }
+#nice blockquote p { margin: 0; color: var(--gt-quote-text); }
+#nice a span { color: var(--gt-accent); border-bottom: 1px solid var(--gt-accent); }
+#nice ul, #nice ol { padding-left: 1.4em; margin: 10px 0; }
+#nice li section { margin: 5px 0; line-height: 1.65; color: var(--gt-text); }
+#nice pre { background-color: var(--gt-code-bg); border-radius: 6px; overflow-x: auto; margin: 14px 0; }
+#nice pre code { font-family: var(--gt-font-mono); font-size: 12.5px; color: var(--gt-code-text); background: transparent; line-height: 1.6; display: block; padding: 12px 14px; }
+#nice table { border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 13px; }
+#nice table tr th, #nice table tr td { border: 1px solid var(--gt-border); padding: 7px 10px; color: var(--gt-text); }
+#nice table tr th { background-color: var(--gt-heading); color: var(--gt-accent); font-weight: 700; }
+#nice img { max-width: 100%; border-radius: 6px; display: block; margin: 12px auto; }
+#nice figcaption { text-align: center; color: var(--gt-muted); font-size: 12px; margin-top: 6px; }
+#nice figure { margin: 16px 0; }
+#nice hr { border: none; border-top: 2px dashed var(--gt-accent); margin: 22px 0; opacity: .5; }
+`;
+
+// ===== 架构师蓝 =====
+themes.architectBlue = `
+:root {
+  --ab-bg: #FFFFFF; --ab-text: #2C3E50; --ab-heading: #0A2540; --ab-accent: #0354FF;
+  --ab-accent-10: rgba(3, 84, 255, 0.10); --ab-border: #E3E8EF; --ab-muted: #5B7A99;
+  --ab-quote-text: #3D5878; --ab-code-bg: #0A2540; --ab-code-text: #DCE8FF;
+  --ab-font-mono: Menlo, Monaco, "SF Mono", Consolas, monospace;
+}
+#nice { font-size: 13px; line-height: 1.6; color: var(--ab-text); background-color: var(--ab-bg); padding: 26px; }
+#nice p { margin: 8px 0; color: var(--ab-text); }
+#nice h1 { font-size: 18px; font-weight: 700; color: var(--ab-heading); margin: 6px 0 16px; padding-bottom: 10px; border-bottom: 2px solid var(--ab-accent); line-height: 1.4; }
+#nice h2 { font-size: 16px; margin: 26px 0 12px; line-height: 1.4; }
+#nice h2 .content { display: inline-block; background-color: var(--ab-accent); color: #FFFFFF; padding: 4px 12px; border-radius: 3px; font-weight: 700; }
+#nice h3 { font-size: 14px; margin: 20px 0 10px; line-height: 1.4; }
+#nice h3 .content { display: inline-block; color: var(--ab-accent); font-weight: 700; border-bottom: 2px solid var(--ab-accent); padding-bottom: 2px; }
+#nice h4 { font-size: 13px; font-weight: 700; color: var(--ab-heading); margin: 16px 0 8px; }
+#nice strong { color: var(--ab-accent); font-weight: 700; }
+#nice p code, #nice li code { font-family: var(--ab-font-mono); color: var(--ab-accent); background-color: var(--ab-accent-10); padding: 1px 6px; border-radius: 3px; font-size: .92em; }
+#nice blockquote { border-left: 4px solid var(--ab-accent); background-color: var(--ab-accent-10); padding: 10px 14px; margin: 14px 0; color: var(--ab-quote-text); border-radius: 0 4px 4px 0; }
+#nice blockquote p { margin: 0; color: var(--ab-quote-text); }
+#nice a span { color: var(--ab-accent); border-bottom: 1px solid var(--ab-accent); }
+#nice ul, #nice ol { padding-left: 1.4em; margin: 10px 0; }
+#nice li section { margin: 5px 0; line-height: 1.7; color: var(--ab-text); }
+#nice pre { background-color: var(--ab-code-bg); padding: 12px 14px; border-radius: 4px; overflow-x: auto; margin: 14px 0; }
+#nice pre code { font-family: var(--ab-font-mono); font-size: 12.5px; color: var(--ab-code-text); background: transparent; line-height: 1.6; }
+#nice table { border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 13px; }
+#nice table tr th, #nice table tr td { border: 1px solid var(--ab-border); padding: 7px 10px; color: var(--ab-text); }
+#nice table tr th { background-color: var(--ab-accent-10); color: var(--ab-accent); font-weight: 700; }
+#nice img { max-width: 100%; border-radius: 4px; display: block; margin: 12px auto; }
+#nice figcaption { text-align: center; color: var(--ab-muted); font-size: 12px; margin-top: 6px; }
+#nice figure { margin: 16px 0; }
+#nice hr { border: none; height: 1px; background: linear-gradient(to right, transparent, var(--ab-accent), transparent); margin: 22px 0; }
+`;
+
+// ===== Claude 风格（暗色）=====
+themes.claudeDark = `
+:root {
+  --cd-bg: #1A1410; --cd-text: #D8CFC4; --cd-heading: #F2E9DF; --cd-accent: #E0823C;
+  --cd-border: #3A2E22; --cd-muted: #8A7B6A; --cd-quote-bg: #241D16; --cd-quote-text: #C9B8A6;
+  --cd-code-bg: #110D09; --cd-code-text: #E8DCC8; --cd-inline-bg: rgba(224,130,60,0.14);
+  --cd-font-mono: Menlo, Monaco, "SF Mono", Consolas, monospace;
+}
+#nice { counter-reset: h2cnt; font-size: 13px; line-height: 1.6; color: var(--cd-text); background-color: var(--cd-bg); letter-spacing: 0.02em; padding: 26px; }
+#nice p { margin: 8px 0; color: var(--cd-text); }
+#nice h1 { font-size: 18px; font-weight: 700; color: var(--cd-heading); margin: 6px 0 16px; padding-bottom: 10px; border-bottom: 1px solid var(--cd-border); line-height: 1.4; }
+#nice h2 { font-size: 16px; font-weight: 700; color: var(--cd-heading); margin: 26px 0 12px; counter-increment: h2cnt; line-height: 1.4; }
+#nice h2 .content { display: inline-block; }
+#nice h2 .content:before { content: counter(h2cnt, cjk-ideographic) "、"; color: var(--cd-accent); font-weight: 700; margin-right: 2px; }
+#nice h3 { font-size: 14px; font-weight: 700; color: var(--cd-accent); margin: 20px 0 10px; line-height: 1.4; }
+#nice h4 { font-size: 13px; font-weight: 700; color: var(--cd-heading); margin: 16px 0 8px; }
+#nice strong { color: var(--cd-accent); font-weight: 700; }
+#nice p code, #nice li code { font-family: var(--cd-font-mono); color: var(--cd-accent); background-color: var(--cd-inline-bg); padding: 1px 6px; border-radius: 3px; font-size: .92em; }
+#nice blockquote { border-left: 3px double var(--cd-accent); background-color: var(--cd-quote-bg); padding: 10px 14px; margin: 14px 0; color: var(--cd-quote-text); font-style: italic; border-radius: 0 4px 4px 0; }
+#nice blockquote p { margin: 0; color: var(--cd-quote-text); }
+#nice a span { color: var(--cd-accent); border-bottom: 1px solid var(--cd-accent); }
+#nice ul, #nice ol { padding-left: 1.4em; margin: 10px 0; }
+#nice li section { margin: 5px 0; line-height: 1.7; color: var(--cd-text); }
+#nice pre { background-color: var(--cd-code-bg); border: 1px solid var(--cd-border); padding: 12px 14px; border-radius: 4px; overflow-x: auto; margin: 14px 0; }
+#nice pre code { font-family: var(--cd-font-mono); font-size: 12.5px; color: var(--cd-code-text); background: transparent; line-height: 1.6; }
+#nice table { border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 13px; }
+#nice table tr th, #nice table tr td { border-bottom: 1px solid var(--cd-border); padding: 7px 10px; color: var(--cd-text); }
+#nice table tr th { color: var(--cd-accent); font-weight: 700; border-bottom: 2px solid var(--cd-accent); }
+#nice img { max-width: 100%; border-radius: 4px; display: block; margin: 12px auto; }
+#nice figcaption { text-align: center; color: var(--cd-muted); font-size: 12px; margin-top: 6px; }
+#nice figure { margin: 16px 0; }
+#nice hr { border: none; border-top: 1px dashed var(--cd-border); margin: 22px 0; }
+`;
+
+const styleEl = document.getElementById('theme-style');
+function setTheme(t) { styleEl.textContent = themes[t]; }
+document.querySelectorAll('.toolbar button').forEach(b => {
+  b.onclick = () => {
+    document.querySelectorAll('.toolbar button').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    setTheme(b.dataset.theme);
+  };
+});
+setTheme('claudeLight');
+</script>
+</body>
+</html>

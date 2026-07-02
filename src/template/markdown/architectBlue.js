@@ -1,51 +1,50 @@
-export default `/* Claude 风格（暗色）
- * 与 Claude 浅色同体系：暖底 + 陶土橙 + 中文序号 + 双线斜体引用
- * 底色：#1A1410（暖深褐，对应浅色暖白）
- * 主色：#E0823C（陶土橙提亮，保证暗底对比度）
+export default `/* 架构师蓝主题
+ * 灵感：工程蓝图，专业沉稳的视觉语言
+ * 主色：#0354FF（架构师蓝）
+ * 底色：白底，淡蓝底统一用 rgba(3,84,255,0.10)
+ * 记忆点：h2 蓝色填充块 + 白字
+ * 层级语言（四形态互不撞）：h1 底线 / h2 色块 / h3 下划线 / 引用 竖条
  */
 
 :root {
-  --cl-bg: #1A1410;
-  --cl-text: #D8CFC4;
-  --cl-heading: #F2E9DF;
-  --cl-accent: #E0823C;
-  --cl-border: #3A2E22;
-  --cl-muted: #8A7B6A;
-  --cl-quote-bg: #241D16;
-  --cl-quote-text: #C9B8A6;
-  --cl-code-bg: #110D09;
-  --cl-code-text: #E8DCC8;
-  --cl-inline-bg: rgba(224, 130, 60, 0.14);
-  --cl-font-sans: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-  --cl-font-mono: Menlo, Monaco, "SF Mono", Consolas, monospace;
+  --ab-bg: #FFFFFF;
+  --ab-text: #2C3E50;
+  --ab-heading: #0A2540;
+  --ab-accent: #0354FF;
+  --ab-accent-10: rgba(3, 84, 255, 0.10);
+  --ab-border: #E3E8EF;
+  --ab-muted: #5B7A99;
+  --ab-quote-text: #3D5878;
+  --ab-code-bg: #0A2540;
+  --ab-code-text: #DCE8FF;
+  --ab-font-sans: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  --ab-font-mono: Menlo, Monaco, "SF Mono", Consolas, monospace;
 }
 
 /* 全局属性 */
 #nice {
-  counter-reset: h2cnt;
-  font-family: var(--cl-font-sans);
+  font-family: var(--ab-font-sans);
   font-size: 13px;
   line-height: 1.6;
-  color: var(--cl-text);
-  background-color: var(--cl-bg);
-  letter-spacing: 0.02em;
+  color: var(--ab-text);
+  background-color: var(--ab-bg);
   -webkit-font-smoothing: antialiased;
 }
 
 /* 段落 */
 #nice p {
   margin: 8px 0;
-  color: var(--cl-text);
+  color: var(--ab-text);
 }
 
-/* 一级标题 */
+/* 一级标题：底部蓝色实线 */
 #nice h1 {
   font-size: 18px;
   font-weight: 700;
-  color: var(--cl-heading);
+  color: var(--ab-heading);
   margin: 6px 0 16px;
   padding-bottom: 10px;
-  border-bottom: 1px solid var(--cl-border);
+  border-bottom: 2px solid var(--ab-accent);
   line-height: 1.4;
 }
 
@@ -57,27 +56,21 @@ export default `/* Claude 风格（暗色）
 #nice h1:after {
 }
 
-/* 二级标题：自动中文序号 */
+/* 二级标题 */
 #nice h2 {
   font-size: 16px;
-  font-weight: 700;
-  color: var(--cl-heading);
   margin: 26px 0 12px;
-  counter-increment: h2cnt;
   line-height: 1.4;
 }
 
-/* 二级标题内容 */
+/* 二级标题内容：蓝色填充块 + 白字（记忆点） */
 #nice h2 .content {
   display: inline-block;
-}
-
-/* 二级标题序号前缀 */
-#nice h2 .content:before {
-  content: counter(h2cnt, cjk-ideographic) "、";
-  color: var(--cl-accent);
+  background-color: var(--ab-accent);
+  color: #FFFFFF;
+  padding: 4px 12px;
+  border-radius: 3px;
   font-weight: 700;
-  margin-right: 2px;
 }
 
 /* 二级标题修饰 */
@@ -87,14 +80,17 @@ export default `/* Claude 风格（暗色）
 /* 三级标题 */
 #nice h3 {
   font-size: 14px;
-  font-weight: 700;
-  color: var(--cl-accent);
   margin: 20px 0 10px;
   line-height: 1.4;
 }
 
-/* 三级标题内容 */
+/* 三级标题内容：蓝字 + 底部短蓝线 */
 #nice h3 .content {
+  display: inline-block;
+  color: var(--ab-accent);
+  font-weight: 700;
+  border-bottom: 2px solid var(--ab-accent);
+  padding-bottom: 2px;
 }
 
 /* 三级标题修饰 */
@@ -105,7 +101,7 @@ export default `/* Claude 风格（暗色）
 #nice h4 {
   font-size: 13px;
   font-weight: 700;
-  color: var(--cl-heading);
+  color: var(--ab-heading);
   margin: 16px 0 8px;
 }
 
@@ -113,7 +109,7 @@ export default `/* Claude 风格（暗色）
 #nice h5 {
   font-size: 13px;
   font-weight: 600;
-  color: var(--cl-heading);
+  color: var(--ab-heading);
   margin: 14px 0 6px;
 }
 
@@ -121,7 +117,7 @@ export default `/* Claude 风格（暗色）
 #nice h6 {
   font-size: 13px;
   font-weight: 600;
-  color: var(--cl-muted);
+  color: var(--ab-muted);
   margin: 14px 0 6px;
 }
 
@@ -141,57 +137,57 @@ export default `/* Claude 风格（暗色）
 #nice li section {
   margin: 5px 0;
   line-height: 1.7;
-  color: var(--cl-text);
+  color: var(--ab-text);
 }
 
-/* 引用：双线 + 斜体 */
+/* 引用：左竖条 + 淡蓝底 */
 #nice blockquote {
-  border-left: 3px double var(--cl-accent);
-  background-color: var(--cl-quote-bg);
+  border-left: 4px solid var(--ab-accent);
+  background-color: var(--ab-accent-10);
   padding: 10px 14px;
   margin: 14px 0;
-  color: var(--cl-quote-text);
-  font-style: italic;
+  color: var(--ab-quote-text);
   border-radius: 0 4px 4px 0;
 }
 
 /* 引用文字 */
 #nice blockquote p {
   margin: 0;
-  color: var(--cl-quote-text);
+  color: var(--ab-quote-text);
 }
 
 /* 链接 */
 #nice a span {
-  color: var(--cl-accent);
-  border-bottom: 1px solid var(--cl-accent);
+  color: var(--ab-accent);
+  border-bottom: 1px solid var(--ab-accent);
 }
 
 /* 加粗 */
 #nice strong {
-  color: var(--cl-accent);
+  color: var(--ab-accent);
   font-weight: 700;
 }
 
 /* 斜体 */
 #nice em {
-  color: var(--cl-quote-text);
+  color: var(--ab-quote-text);
 }
 
 /* 加粗斜体 */
 #nice em strong {
-  color: var(--cl-accent);
+  color: var(--ab-accent);
 }
 
 /* 删除线 */
 #nice del {
-  color: var(--cl-muted);
+  color: var(--ab-muted);
 }
 
 /* 分隔线 */
 #nice hr {
   border: none;
-  border-top: 1px dashed var(--cl-border);
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--ab-accent), transparent);
   margin: 22px 0;
 }
 
@@ -206,25 +202,24 @@ export default `/* Claude 风格（暗色）
 /* 图片描述文字 */
 #nice figcaption {
   text-align: center;
-  color: var(--cl-muted);
+  color: var(--ab-muted);
   font-size: 12px;
   margin-top: 6px;
 }
 
 /* 行内代码 */
 #nice p code, #nice li code {
-  font-family: var(--cl-font-mono);
-  color: var(--cl-accent);
-  background-color: var(--cl-inline-bg);
+  font-family: var(--ab-font-mono);
+  color: var(--ab-accent);
+  background-color: var(--ab-accent-10);
   padding: 1px 6px;
   border-radius: 3px;
   font-size: 0.92em;
 }
 
-/* 非微信代码块容器：深褐底 + 细边（暗底区分边界） */
+/* 非微信代码块容器：深蓝底 */
 #nice pre {
-  background-color: var(--cl-code-bg);
-  border: 1px solid var(--cl-border);
+  background-color: var(--ab-code-bg);
   padding: 12px 14px;
   border-radius: 4px;
   overflow-x: auto;
@@ -233,9 +228,9 @@ export default `/* Claude 风格（暗色）
 
 /* 非微信代码块文字 */
 #nice pre code {
-  font-family: var(--cl-font-mono);
+  font-family: var(--ab-font-mono);
   font-size: 12.5px;
-  color: var(--cl-code-text);
+  color: var(--ab-code-text);
   background: transparent;
   line-height: 1.6;
 }
@@ -251,58 +246,58 @@ export default `/* Claude 风格（暗色）
 /* 表格内的单元格 */
 #nice table tr th,
 #nice table tr td {
-  border-bottom: 1px solid var(--cl-border);
+  border: 1px solid var(--ab-border);
   padding: 7px 10px;
-  color: var(--cl-text);
+  color: var(--ab-text);
 }
 
-/* 表头 */
+/* 表头：淡蓝底 + 蓝字 */
 #nice table tr th {
-  color: var(--cl-accent);
+  background-color: var(--ab-accent-10);
+  color: var(--ab-accent);
   font-weight: 700;
-  border-bottom: 2px solid var(--cl-accent);
 }
 
-/* 微信代码块：统一深褐底 */
+/* 微信代码块：统一深蓝底 */
 #nice .code-snippet__fix {
-  background-color: var(--cl-code-bg) !important;
-  border-color: var(--cl-border) !important;
+  background-color: var(--ab-code-bg) !important;
+  border-color: var(--ab-border) !important;
 }
 
 #nice .code-snippet__fix .code-snippet__line-index li,
 #nice .code-snippet__fix .code-snippet__line-index li::before {
-  color: var(--cl-muted) !important;
+  color: var(--ab-muted) !important;
 }
 
 /* 脚注文字 */
 #nice .footnote-word {
-  color: var(--cl-accent);
+  color: var(--ab-accent);
 }
 
 /* 脚注上标 */
 #nice .footnote-ref {
-  color: var(--cl-accent);
+  color: var(--ab-accent);
 }
 
 /* "参考资料"四个字 */
 #nice .footnotes-sep:before {
-  color: var(--cl-heading);
+  color: var(--ab-heading);
 }
 
 /* 参考资料编号 */
 #nice .footnote-num {
-  color: var(--cl-muted);
+  color: var(--ab-muted);
 }
 
 /* 参考资料文字 */
 #nice .footnote-item p {
-  color: var(--cl-muted);
+  color: var(--ab-muted);
   font-size: 12px;
 }
 
 /* 参考资料解释 */
 #nice .footnote-item p em {
-  color: var(--cl-quote-text);
+  color: var(--ab-quote-text);
 }
 
 /* 行间公式 */

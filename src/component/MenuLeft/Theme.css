@@ -20,6 +20,12 @@
 .nice-themeselect-theme-item-name {
   margin-right: 10px;
 }
+.nice-themeselect-theme-item-desc {
+  color: #999;
+  font-size: 12px;
+  margin-left: 16px;
+  white-space: nowrap;
+}
 .nice-themeselect-theme-item-new {
   border-radius: 3px;
   font-size: 12px;

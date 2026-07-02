@@ -26,6 +26,7 @@ Fork 自 [markdown2html](https://github.com/TaleAi/markdown2html)，略有调整
 ## 本地开发
 
 ```bash
+nvm use 18
 # 安装依赖
 yarn install
 
